@@ -1,0 +1,12 @@
+.results {
+    margin-top: 25px;
+}
+
+a {
+    text-align: left;
+    color: black;
+}
+
+.save-btn {
+    float: right;
+}
