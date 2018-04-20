@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import API from "../utils/API";
 
-const Saved = props => {
-    console.log(props.saved)
+class Saved extends Component {
 
+    delArticle = id => {
+        this.props.onClick(id)
+    }
+
+    render() {
     return (
         <div className="saved card">
             <div className="card-header">
@@ -12,14 +15,14 @@ const Saved = props => {
             <div className="card-body">
                 <ul className="list-group">
                     {
-                        props.saved.map((arr) => {
+                        this.props.saved.map((arr) => {
                             console.log(arr)
                             return (
                                 <li className="list-group-item" key={arr._id}>
                                     <a href={arr.url}>
                                         {arr.title}
                                     </a>
-                                    <button onClick={() => this.deleteArticle() }key={arr._id}type="button" className="save-btn btn btn-primary" >Delete</button>
+                                    <button onClick={() => this.delArticle(arr._id) }key={arr._id}type="button" className="save-btn btn btn-primary" >Delete</button>
                                 </li>
                             )
                         })
@@ -28,6 +31,7 @@ const Saved = props => {
             </div>
         </div>
     )
+    }
 }
 
 export default Saved;

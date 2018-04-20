@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import Results from "./Results";
 import Saved from "./Saved";
+import "./Search.css";
 
 class Search extends Component {
     state= {
@@ -14,6 +15,10 @@ class Search extends Component {
     
     componentDidMount() {
         console.log("did mount")
+        this.loadArticles();
+    }
+
+    loadArticles = () => {
         API.getSavedArticles().then(res => {
             console.log(res)
             this.setState({
@@ -44,6 +49,25 @@ class Search extends Component {
                     results: res.data.response.docs
                 })
             })
+    };
+
+    saveArticle = (url, title, date) => {
+        console.log(url, title, date)
+
+        API.saveArticle({
+            title: title,
+            date: date,
+            url: url
+        })
+        .then(res => this.loadArticles())
+        .catch(err => console.log(err));
+    }
+
+    deleteArticle = id => {
+        console.log(id)
+        API.deleteArticle(id)
+          .then(res => this.loadArticles())
+          .catch(err => console.log(err));
     };
 
 
@@ -93,8 +117,8 @@ class Search extends Component {
                         </form>
                     </div>
                 </div>
-                {this.state.results.length === 0 ? null : <Results results={this.state.results}/>}
-                <Saved saved={this.state.saved}/>
+                {this.state.results.length === 0 ? null : <Results results={this.state.results} onClick={this.saveArticle} />}
+                <Saved saved={this.state.saved} onClick={this.deleteArticle}/>
             </div>
         )
     }

@@ -1,21 +1,12 @@
 import React, { Component } from "react";
-import API from "../utils/API";
-import "./Results.css";
+//import "./Results.css";
 
 
 
 class Results extends Component {
 
     saveArticle = (url, title, date) => {
-        console.log(url, title, date)
-
-        API.saveArticle({
-            title: title,
-            date: date,
-            url: url
-        })
-        .then()
-        .catch(err => console.log(err));
+        this.props.onClick(url, title, date)
     }
 
     render() {
